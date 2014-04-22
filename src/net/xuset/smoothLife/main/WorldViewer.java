@@ -105,7 +105,7 @@ public class WorldViewer {
 		if (uiController.shouldDraw()) {
 			drawWorld(1.0);
 			
-			long pause = msPerUpdate - System.currentTimeMillis() - startTime;
+			long pause = msPerUpdate - (System.currentTimeMillis() - startTime);
 			if (pause > 0)
 				try { Thread.sleep(pause); } catch (InterruptedException ex) { }
 		}
