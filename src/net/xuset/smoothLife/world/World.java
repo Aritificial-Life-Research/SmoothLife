@@ -49,6 +49,11 @@ public class World {
 	public void updateBlobs() {
 		for (int i = 0; i < species.size(); i++) {
 			Specie sp = species.get(i);
+			sp.preupdateBlobs();
+		}
+		
+		for (int i = 0; i < species.size(); i++) {
+			Specie sp = species.get(i);
 			sp.updateBlobs();
 		}
 	}

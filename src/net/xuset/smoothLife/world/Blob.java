@@ -114,6 +114,10 @@ public class Blob {
 		body.reset(x, y, newChromo.getRadius(), angle);
 	}
 	
+	void preupdate() {
+		wasAttacked = false;
+	}
+	
 	void update() {
 		age++;
 		energy += costToLive;

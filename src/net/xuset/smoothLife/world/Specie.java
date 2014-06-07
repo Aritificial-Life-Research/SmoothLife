@@ -61,16 +61,23 @@ public class Specie {
 		return specieId;
 	}
 	
-	void updateBlobs() {
+	void preupdateBlobs() {
 		for (int i = 0; i < liveBlobs.size(); i++) {
 			Blob b = liveBlobs.get(i);
-			b.update();
+			b.preupdate();
 			
 			if (b.getEnergy() <= 0.0) {
 				deadBlobs.add(b);
 				liveBlobs.remove(i);
 				i--;
 			}
+		}
+	}
+	
+	void updateBlobs() {
+		for (int i = 0; i < liveBlobs.size(); i++) {
+			Blob b = liveBlobs.get(i);
+			b.update();
 		}
 		
 		if (lastSpawnTick == ticksPerSpawn) {
