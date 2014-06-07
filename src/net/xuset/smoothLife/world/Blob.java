@@ -1,7 +1,6 @@
 package net.xuset.smoothLife.world;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class Blob {
 	private final BlobFinder blobFinder;
 	private final boolean isPrey;
 	private final ChromosomeHolder chromoHolder;
-	
+		
 	private int age;
 	private double energy;
 	private boolean wasAttacked = false;
@@ -61,31 +60,17 @@ public class Blob {
 		return new Color(r, g, b);
 	}
 	
-	public void draw(Graphics g, double scale) {
-		Color mainColor = getColor();
-		Color borderColor = wasAttacked ? mainColor.brighter() : mainColor.darker();
-		double x = body.getX() * scale;
-		double y = body.getY() * scale;
-		double rb = body.getRadius() * scale; //radius border
-		double rm = (body.getRadius() - 2) * scale; //radius main
-		
-		drawAngleView(g, scale, x, y);
-		
-		g.setColor(borderColor);
-		g.fillOval(
-				(int) (x - rb), (int) (y - rb),
-				(int) (rb * 2), (int) (rb * 2));
-		
-
-		g.setColor(mainColor);
-		g.fillOval(
-				(int) (x - rm), (int) (y - rm),
-				(int) (rm * 2), (int) (rm * 2));
-		
-		drawInnerCircle(g, scale, x, y);
-		
-		wasAttacked = false;
-		
+	public boolean wasAttacked() {
+		return wasAttacked;
+	}
+	
+	public boolean isPrey() {
+		return isPrey;
+	}
+	
+	public BlobActions[] getActions() {
+		BlobActions[] buff = new BlobActions[actionBuffer.size()];
+		return actionBuffer.toArray(buff);
 	}
 	
 	long getSpecieId() {
@@ -189,38 +174,5 @@ public class Blob {
 		Blob friendly = blobFinder.getClosestSimilar(this);
 		if (friendly != null && body.isWithinRange(friendly.body, groupRange))
 			energy += -costToLive;
-	}
-	
-	private void drawAngleView(Graphics g, double scale, double x, double y) {
-		double diam = (attackRange + body.getRadius()) * scale * 2;
-		double viewAngle = Math.PI / 8;
-		
-		if (actionBuffer.contains(BlobActions.SPECIAL_ACTION) && !isPrey)
-			g.setColor(Color.white);
-		else
-			g.setColor(Color.white);
-		
-		g.fillArc(
-				(int) (x - diam/2), (int) (y - diam/2),
-				(int) diam, (int) diam,
-				(int) (Math.toDegrees(body.getAngle() - viewAngle)),
-				(int) Math.toDegrees(2 * viewAngle));
-	}
-	
-	private static final Color predatorInnerColor = new Color(100, 0, 0);
-	private static final Color predatorInnerActiveColor = new Color(220, 0, 0);
-	private void drawInnerCircle(Graphics g, double scale, double x, double y) {
-		
-		if (isPrey)
-			g.setColor(getColor().brighter());
-		else
-			g.setColor(actionBuffer.contains(BlobActions.SPECIAL_ACTION) ?
-					predatorInnerActiveColor : predatorInnerColor);
-
-		double ri = body.getRadius() * 0.2 * scale;
-		
-		g.fillOval(
-				(int) (x - ri), (int) (y - ri),
-				(int) (ri * 2), (int) (ri * 2));
 	}
 }
