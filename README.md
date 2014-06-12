@@ -13,3 +13,13 @@ When a new world is created the different species are also created. Unless other
 Each species has it's own gene pool that is populated by the blobs of the same species. When a blob dies, a genetic algorithm is run on the gene pool to create a new (and hopefully better) chromosome. The chromosome is used to determine the size, color of the blob. It is also used to determine the weights for blob's brain.
 
 ![Screen Shot](https://raw.github.com/xuset/SmoothLife/master/screenShot2.png)
+
+Getting started
+---------------
+You can get a pre-compiled jar file by heading over to the [release section](https://github.com/xuset/SmoothLife/releases) and grapping the latest release. Or you can compile it yourself.
+```
+cd path/to/smoothLife/
+javac -cp lib/ObjectIO.jar -sourcepath src/ src/net/xuset/smoothLife/main/WorldViewer.java
+java -cp "src/:lib/ObjectIO.jar" net.xuset.smoothLife.main.WorldViewer
+
+```
